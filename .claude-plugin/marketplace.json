@@ -1,13 +1,18 @@
 {
   "name": "web-design-stack",
-  "owner": { "name": "shashwatworks2500-cell", "url": "https://github.com/shashwatworks2500-cell" },
-  "metadata": { "description": "Ultimate Claude Code Web Design Stack — agency-grade website design environment." },
+  "owner": {
+    "name": "shashwatworks2500-cell",
+    "url": "https://github.com/shashwatworks2500-cell"
+  },
+  "metadata": {
+    "description": "Ultimate Claude Code Web Design Stack \u2014 agency-grade website design environment."
+  },
   "plugins": [
     {
       "name": "web-design-stack",
       "source": "./",
       "category": "design",
-      "description": "Agency-grade website design environment: UI/UX Pro Max design intelligence, Taste design skills, browser-driven visual QA, and a 15-stage design workflow."
+      "description": "Agency-grade website design environment: UI/UX Pro Max design intelligence, Taste design skills, art direction and real imagery (licensed stock + Gemini generation), component discovery (shadcn, 21st, React Bits), browser-driven visual QA, and a 21-stage design workflow from discovery to final audit."
     }
   ]
 }

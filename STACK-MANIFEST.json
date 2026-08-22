@@ -233,9 +233,9 @@
     },
     {
       "component": "web-design-constitution",
-      "role": "the design rules and 15-stage workflow enforced by this stack",
+      "role": "the design rules, two constitutions (interaction/motion, image/visual content) and 21-stage workflow enforced by this stack",
       "source_repository": "https://github.com/shashwatworks2500-cell/Skills",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "installation_method": "vendored (original work)",
       "local_path": [
         "CLAUDE.md",

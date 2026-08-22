@@ -159,7 +159,9 @@ head_ "Constitution consistency"
 STAGES=$(grep -cE '^\| [0-9]+ \| \*\*' CLAUDE.md)
 [ "$STAGES" -eq 21 ] && pass "CLAUDE.md declares $STAGES workflow stages" \
                      || fail "CLAUDE.md declares $STAGES workflow stages (expected 21)"
-for f in CLAUDE.md README.md skills/web-design-constitution/SKILL.md; do
+for f in CLAUDE.md README.md skills/web-design-constitution/SKILL.md \
+         .claude-plugin/plugin.json .claude-plugin/marketplace.json STACK-MANIFEST.json \
+         docs/ARCHITECTURE.md docs/STACK.md docs/SETUP.md docs/WORKFLOW.md docs/INSTALL.md; do
   if grep -qE '15-stage|FINAL BUILD|RESEARCH → INFORMATION ARCHITECTURE' "$f" 2>/dev/null; then
     fail "$f still references the superseded 15-stage workflow"
   else
