@@ -1,3 +1,10 @@
+> **Note — adapted for this repository.** This document is vendored from the upstream
+> UI/UX Pro Max `stack/` directory and kept close to the original. Its
+> `/plugin install ...@anthropics/claude-code` commands use an obsolete marketplace path,
+> and the `/plugin` slash command is unavailable in some environments. Use
+> [INSTALL.md](INSTALL.md) or `scripts/install.sh`, which use the current
+> `anthropics/claude-plugins-official` marketplace via the `claude plugin` CLI.
+
 # The Stack — why each tool is here
 
 AI design fails in three predictable ways. Each layer of this stack fixes one.

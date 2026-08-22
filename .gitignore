@@ -4,11 +4,18 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
-# Audit / Playwright output (regenerate locally; examples/ is committed on purpose)
+# Audit / Playwright output (regenerate locally; docs examples are committed on purpose)
 audit-output/
 test-results/
 playwright-report/
 .playwright/
+
+# Claude-Mem runtime data — never commit the memory database
+.claude-mem/
+claude-mem-data/
+*.sqlite
+*.sqlite3
+*.db
 
 # Local Claude Code state
 .claude/settings.local.json
@@ -18,6 +25,16 @@ playwright-report/
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Caches / temp
+.cache/
+tmp/
+temp/
+coverage/
 
 # OS / editor
 .DS_Store

@@ -8,7 +8,7 @@ The stack has three layers, and each has one job:
 
 | Layer | Tool | Job |
 |---|---|---|
-| **Knowledge** | `ui-ux-pro-max` skill (`.claude/skills/ui-ux-pro-max`) | What to build. Tokens, palettes, type pairings, UX rules, Core Web Vitals budgets. |
+| **Knowledge** | `ui-ux-pro-max` skill (`skills/ui-ux-pro-max`, or `.claude/skills/ui-ux-pro-max` in a project install) | What to build. Tokens, palettes, type pairings, UX rules, Core Web Vitals budgets. |
 | **Taste** | `frontend-design` plugin skill | Make it distinctive. Attitude, art direction, anti-default. |
 | **Feedback** | `playwright` + `chrome-devtools` MCP | Actually see the rendered result and fix it. |
 | **Components** | `shadcn` MCP | Add primitives instead of hand-rolling them. |
@@ -344,9 +344,11 @@ and the copy, the art direction has failed. Start again at VISUAL DIRECTION.
 
 - `ui-ux-pro-max` search:
   ```bash
-  python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --domain style|color|typography|ux|landing|gsap|web-vitals
-  python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<product> <industry>" --design-system -p "Project"
+  python3 <skills-root>/ui-ux-pro-max/scripts/search.py "<query>" --domain style|color|typography|ux|landing|gsap|web-vitals
+  python3 <skills-root>/ui-ux-pro-max/scripts/search.py "<product> <industry>" --design-system -p "Project"
   ```
+  `<skills-root>` is `skills/` when this stack is installed as a plugin, or
+  `.claude/skills/` when installed into a project by `scripts/install.sh --into`.
 - Standalone multi-viewport audit: `npm run audit -- --url http://localhost:3000`
 - Let `ui-ux-pro-max` set **tokens**; let `frontend-design` set **attitude**. Data for
   correctness, taste for distinctiveness.
