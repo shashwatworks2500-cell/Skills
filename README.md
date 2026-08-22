@@ -5,9 +5,11 @@ An agency-grade Claude Code environment for designing and building premium websi
 Most AI-generated interfaces look AI-generated: purple gradients, uniform rounded cards, a
 centered hero above three feature columns, and nobody ever looked at the result in a browser.
 This stack exists to prevent that. It combines a **knowledge** layer that supplies real design
-tokens, a **taste** layer that commits to a specific art direction, and a **feedback** layer
-that drives an actual browser and fixes what it finds — bound together by a 15-stage workflow
-and a written constitution.
+tokens, a **taste** layer that commits to a specific art direction, an **art direction** layer
+that decides what each section should actually show, an **imagery** layer that sources or
+generates the real asset, a **component** layer that searches before it builds, and a
+**feedback** layer that drives an actual browser and fixes what it finds — bound together by a
+21-stage workflow and a written constitution.
 
 ```bash
 claude plugin marketplace add shashwatworks2500-cell/Skills

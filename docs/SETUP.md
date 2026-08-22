@@ -70,14 +70,36 @@ Requires the Figma desktop app. Enable Dev Mode → toggle the MCP server on. Th
 
 Guide: <https://help.figma.com/hc/en-us/articles/39888612464151-Claude-Code-and-Figma-Set-up-the-MCP-server>
 
-### 21st.dev Magic MCP
-Generates React components from a prompt. Get an API key at <https://21st.dev>, then add:
+> **21st.dev is no longer an optional add-on** — it ships in the default `.mcp.json` as the
+> current unified 21st MCP (`https://21st.dev/api/mcp`). The old `@21st-dev/magic` package is a
+> deprecated compatibility proxy upstream and old Magic API keys were reset; do not use it.
+> See [API keys](INSTALL.md#api-keys).
 
-```json
-"magic": { "command": "npx", "args": ["-y", "@21st-dev/magic@latest"], "env": { "API_KEY": "<your-key>" } }
+---
+
+## API keys
+
+Four of the seven MCP servers take credentials. Copy the template and fill in only what you need
+— every server degrades gracefully when its key is absent:
+
+```bash
+cp .env.example .env      # .env is git-ignored
 ```
 
-Keep keys out of git — prefer `.claude/settings.local.json` or your shell env, both gitignored.
+| Server | Variable | Get it at |
+|---|---|---|
+| `imagebank` | `PEXELS_API_KEY` / `UNSPLASH_ACCESS_KEY` / `PIXABAY_API_KEY` (≥1) | pexels.com/api · unsplash.com/developers · pixabay.com/api/docs |
+| `nanobanana` | `GOOGLE_AI_API_KEY` | aistudio.google.com/apikey |
+| `21st` | `TWENTY_FIRST_API_KEY` | 21st.dev/mcp |
+| `pinterest` | *(none — browser OAuth)* | — |
+
+**Never put a key in a tracked file.** `.mcp.json` carries `${VAR}` expansions only, and
+`scripts/verify.sh` fails if a literal value appears there or if a credential-shaped string lands
+in any tracked file. For per-machine overrides use your shell env or
+`.claude/settings.local.json` — both gitignored.
+
+Full detail, including the Pinterest OAuth and self-hosting flow:
+[`docs/INSTALL.md`](INSTALL.md#api-keys).
 
 ## Troubleshooting
 

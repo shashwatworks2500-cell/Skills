@@ -200,9 +200,20 @@ if [ -n "$INTO" ]; then
     fi
 
     if [ -f "$INTO/.mcp.json" ]; then
-      skip ".mcp.json exists in target — not overwritten (merge the three servers manually)"
+      skip ".mcp.json exists in target — not overwritten (merge the seven servers manually)"
     else
       cp "$REPO_ROOT/.mcp.json" "$INTO/.mcp.json"; ok ".mcp.json installed"
+    fi
+
+    # Environment template for the four credentialed MCP servers. Never copy a real .env.
+    if [ -f "$INTO/.env.example" ]; then
+      skip ".env.example exists in target — not overwritten"
+    else
+      cp "$REPO_ROOT/.env.example" "$INTO/.env.example" && ok ".env.example installed (cp to .env and fill in)"
+    fi
+    if [ -f "$INTO/.gitignore" ] && ! grep -qE '^\.env$' "$INTO/.gitignore"; then
+      printf '\n# Env / secrets (added by web-design-stack)\n.env\n.env.*\n!.env.example\n' >> "$INTO/.gitignore"
+      ok ".env added to target .gitignore"
     fi
 
     mkdir -p "$INTO/scripts"
@@ -240,4 +251,9 @@ echo "    /design-plan portfolio site for a photographer, editorial and minimal"
 echo "    /website"
 echo "    /design-review http://localhost:3000"
 echo
-echo "  Docs: docs/INSTALL.md · docs/ARCHITECTURE.md · docs/WORKFLOW.md"
+echo "  Image sourcing, image generation and 21st need API keys to do anything:"
+echo "    cp .env.example .env    then fill in only what you need"
+echo "  Pinterest uses browser OAuth on first use — no key required."
+echo "  Everything else works with no secrets at all."
+echo
+echo "  Docs: docs/INSTALL.md · docs/ARCHITECTURE.md · docs/WORKFLOW.md · docs/GAP-REPORT.md"

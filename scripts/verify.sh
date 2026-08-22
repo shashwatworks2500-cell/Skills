@@ -140,6 +140,36 @@ else
   pass ".mcp.json passes all secrets through \${VAR} expansions only"
 fi
 
+# ── No duplicate skills ──────────────────────────────────────────────────────
+head_ "Duplicate skill check"
+# Two skills claiming the same frontmatter name would shadow each other at load time.
+DUPNAMES=$(for d in skills/*/; do
+  sed -n '2,15p' "$d/SKILL.md" 2>/dev/null | sed -n 's/^name: *//p' | head -1 | tr -d '"'"'"''
+done | sort | uniq -d)
+[ -z "$DUPNAMES" ] && pass "no duplicate skill names" \
+                   || fail "duplicate skill names: $(echo "$DUPNAMES" | tr '\n' ' ')"
+# A skill directory nested inside another skill would be installed twice.
+NESTED=$(find skills -mindepth 3 -name SKILL.md 2>/dev/null)
+[ -z "$NESTED" ] && pass "no nested skill directories" \
+                 || fail "nested SKILL.md: $(echo "$NESTED" | tr '\n' ' ')"
+
+# ── Constitution consistency ─────────────────────────────────────────────────
+head_ "Constitution consistency"
+# The workflow is stated in three places; they must not drift apart.
+STAGES=$(grep -cE '^\| [0-9]+ \| \*\*' CLAUDE.md)
+[ "$STAGES" -eq 21 ] && pass "CLAUDE.md declares $STAGES workflow stages" \
+                     || fail "CLAUDE.md declares $STAGES workflow stages (expected 21)"
+for f in CLAUDE.md README.md skills/web-design-constitution/SKILL.md; do
+  if grep -qE '15-stage|FINAL BUILD|RESEARCH → INFORMATION ARCHITECTURE' "$f" 2>/dev/null; then
+    fail "$f still references the superseded 15-stage workflow"
+  else
+    pass "$f is on the 21-stage workflow"
+  fi
+done
+for sect in "INTERACTION & MOTION CONSTITUTION" "IMAGE & VISUAL CONTENT CONSTITUTION"; do
+  grep -qF "## $sect" CLAUDE.md && pass "CLAUDE.md has $sect" || fail "CLAUDE.md missing $sect"
+done
+
 # ── Visual intelligence + component skills ───────────────────────────────────
 head_ "Visual intelligence & component skills"
 for s in visual-art-direction image-sourcing image-generation pinterest-art-direction \
@@ -193,8 +223,9 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
   echo "$TRACKED" | grep -qE "(^|/)\.claude-mem/|claude-mem-data/|\.db$|\.sqlite3?$" \
     && fail "claude-mem database or SQLite file tracked" || pass "no claude-mem database tracked"
 
-  echo "$TRACKED" | grep -qE "(^|/)\.env(\..*)?$" \
-    && fail ".env file tracked" || pass "no .env tracked"
+  # .env.example is tracked on purpose; any other .env variant is a leak.
+  echo "$TRACKED" | grep -E "(^|/)\.env(\..*)?$" | grep -qv "\.env\.example$" \
+    && fail ".env file tracked" || pass "no .env tracked (.env.example excepted)"
 
   echo "$TRACKED" | grep -qE "\.(pem|key|p12|pfx)$|id_rsa|id_ed25519" \
     && fail "private key material tracked" || pass "no key material tracked"
