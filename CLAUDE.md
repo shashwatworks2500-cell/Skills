@@ -11,7 +11,9 @@ The stack has three layers, and each has one job:
 | **Knowledge** | `ui-ux-pro-max` skill (`skills/ui-ux-pro-max`, or `.claude/skills/ui-ux-pro-max` in a project install) | What to build. Tokens, palettes, type pairings, UX rules, Core Web Vitals budgets. |
 | **Taste** | `frontend-design` plugin skill | Make it distinctive. Attitude, art direction, anti-default. |
 | **Feedback** | `playwright` + `chrome-devtools` MCP | Actually see the rendered result and fix it. |
-| **Components** | `shadcn` MCP | Add primitives instead of hand-rolling them. |
+| **Components** | `shadcn` MCP (+ `@react-bits`, `@aceternity` registries), `21st` MCP | Add primitives and interactions instead of hand-rolling them. |
+| **Art direction** | `visual-art-direction`, `pinterest-art-direction` skills, `pinterest` MCP | Decide what the page should *show*, before deciding how it looks. |
+| **Imagery** | `image-sourcing` + `imagebank` MCP, `image-generation` + `nanobanana` MCP | Source licensed photography, or generate original assets. |
 | **Review** | `design-review` agent, `code-review`, `claude-security` | Gate before done. |
 
 ---
@@ -21,31 +23,42 @@ The stack has three layers, and each has one job:
 Every website task runs this sequence. Do not skip stages. Do not reorder them.
 
 ```
-RESEARCH → INFORMATION ARCHITECTURE → DESIGN SYSTEM → VISUAL DIRECTION →
-IMPLEMENTATION → RESPONSIVE → ANIMATION → ACCESSIBILITY → PERFORMANCE →
-BROWSER QA → VISUAL CRITIQUE → POLISH → CODE REVIEW → SECURITY REVIEW → FINAL BUILD
+DISCOVERY → DESIGN BRIEF → ART DIRECTION → REFERENCE RESEARCH → IMAGE STRATEGY →
+DESIGN SYSTEM → COMPONENT DISCOVERY → INFORMATION ARCHITECTURE → VISUAL DESIGN →
+IMPLEMENTATION → INTERACTION DESIGN → ANIMATION → RESPONSIVE → ACCESSIBILITY →
+PERFORMANCE → BROWSER QA → VISUAL CRITIQUE → POLISH → CODE REVIEW → SECURITY →
+FINAL AUDIT
 ```
 
 | # | Stage | Do this | Primary tool |
 |---|---|---|---|
-| 1 | **RESEARCH** | Understand audience, competitors, references, constraints. Never design blind. | `/shape` |
-| 2 | **INFORMATION ARCHITECTURE** | Page inventory, nav model, content hierarchy, conversion path. Structure before pixels. | `/shape`, `ui-ux-pro-max --domain landing` |
-| 3 | **DESIGN SYSTEM** | Generate concrete tokens: color, type, spacing, radius, elevation. This is the source of truth. | `/design-plan`, `ui-ux-pro-max --design-system` |
-| 4 | **VISUAL DIRECTION** | Commit to ONE tone. Pick the signature element. Reject defaults explicitly. | `frontend-design`, `/high-end-visual-design` |
-| 5 | **IMPLEMENTATION** | Build with the tokens. Components via shadcn MCP. | `shadcn` MCP |
-| 6 | **RESPONSIVE** | Verify 375 / 768 / 1024 / 1440. Content reflows, never shrinks. | `/adapt` |
-| 7 | **ANIMATION** | Only motion that carries meaning. Respect reduced-motion. | `/animate` |
-| 8 | **ACCESSIBILITY** | WCAG 2.1 AA floor. Keyboard, contrast, semantics, focus. | `/audit` |
-| 9 | **PERFORMANCE** | Core Web Vitals budgets. Images, fonts, bundle. | `/optimize`, Lighthouse via chrome-devtools MCP |
-| 10 | **BROWSER QA** | Open the real page. Screenshot. Exercise states. Read the console. | `playwright` MCP |
-| 11 | **VISUAL CRITIQUE** | Ranked findings across viewports. | `/design-review`, `/critique` |
-| 12 | **POLISH** | Alignment, optical spacing, micro-detail. | `/polish` |
-| 13 | **CODE REVIEW** | Correctness, conventions, over-engineering. | `/code-review`, `/ponytail-review` |
-| 14 | **SECURITY REVIEW** | Injection, XSS, secrets, SSRF, dependency risk. | `claude-security` |
-| 15 | **FINAL BUILD** | Typecheck, lint, build, re-verify. Green or not done. | build scripts |
+| 1 | **DISCOVERY** | Audience, competitors, constraints, what success means. Never design blind. | `/shape` |
+| 2 | **DESIGN BRIEF** | Write it down: positioning, the one thing to remember, tone, constraints. Everything downstream cites this. | `/shape` |
+| 3 | **ART DIRECTION** | Decide what the page should *show*. Run the image decision framework per section. Commit to ONE tone and the signature element. | `visual-art-direction`, `frontend-design`, `/high-end-visual-design` |
+| 4 | **REFERENCE RESEARCH** | Gather and analyse references. Extract typography, composition, palette, photography direction — then design originally from them. | `pinterest-art-direction`, `pinterest` MCP, `ui-ux-pro-max --domain style` |
+| 5 | **IMAGE STRATEGY** | Produce the image plan: per section, NEED? → SOURCE / GENERATE / ASSET, with subject, aspect, focal point, motion, alt. | `visual-art-direction` |
+| 6 | **DESIGN SYSTEM** | Generate concrete tokens: color, type, spacing, radius, elevation. This is the source of truth. | `/design-plan`, `ui-ux-pro-max --design-system` |
+| 7 | **COMPONENT DISCOVERY** | Search before building. Walk the selection hierarchy; choose and plan adaptation. | `component-discovery`, `interactive-components`, `shadcn` + `21st` MCP |
+| 8 | **INFORMATION ARCHITECTURE** | Page inventory, nav model, content hierarchy, conversion path. Structure before pixels. | `/shape`, `ui-ux-pro-max --domain landing` |
+| 9 | **VISUAL DESIGN** | Compose the page: grid, rhythm, density variation, where the boldness is spent. | `frontend-design`, `/layout`, `/typeset` |
+| 10 | **IMPLEMENTATION** | Build with the tokens. Components adapted, never dropped in raw. Images produced and integrated. | `shadcn` MCP, `image-sourcing`, `image-generation` |
+| 11 | **INTERACTION DESIGN** | Choose the interaction patterns and their purpose. Budget them. Define reduced-motion and touch paths. | `interactive-components` |
+| 12 | **ANIMATION** | Implement the motion. Only motion that carries meaning. Respect reduced-motion. | `/animate`, `ui-ux-pro-max --domain gsap` |
+| 13 | **RESPONSIVE** | Verify 375 / 768 / 1024 / 1440. Content reflows, never shrinks. Focal points survive every crop. | `/adapt` |
+| 14 | **ACCESSIBILITY** | WCAG 2.1 AA floor. Keyboard, contrast, semantics, focus, alt text. | `/audit` |
+| 15 | **PERFORMANCE** | Core Web Vitals budgets. Images, fonts, bundle, deferred effect runtimes. | `/optimize`, Lighthouse via chrome-devtools MCP |
+| 16 | **BROWSER QA** | Open the real page. Screenshot. Exercise states. Read the console. | `playwright` MCP |
+| 17 | **VISUAL CRITIQUE** | Ranked findings across viewports. | `/design-review`, `/critique` |
+| 18 | **POLISH** | Alignment, optical spacing, micro-detail. | `/polish` |
+| 19 | **CODE REVIEW** | Correctness, conventions, over-engineering. | `/code-review`, `/ponytail-review` |
+| 20 | **SECURITY** | Injection, XSS, secrets, SSRF, dependency risk. No API key in any tracked file. | `claude-security` |
+| 21 | **FINAL AUDIT** | Typecheck, lint, build, `npm run verify`, `npm run audit`, re-verify. Green or not done. | build scripts, `scripts/verify.sh` |
 
-**Hard gate:** stages 10 and 11 are mandatory. *A UI change you have not looked at in a browser
+**Hard gate:** stages 16 and 17 are mandatory. *A UI change you have not looked at in a browser
 is not finished.* Blocker/High findings must be fixed before you report done.
+
+**Second hard gate:** stages 3 and 5 are mandatory for any page with a visual surface. *A page
+whose imagery nobody decided is a page with stock photos on it.*
 
 ---
 
@@ -340,6 +353,168 @@ and the copy, the art direction has failed. Start again at VISUAL DIRECTION.
 
 ---
 
+## INTERACTION & MOTION CONSTITUTION
+
+Sections 8–11 cover *how* to animate. This section covers *whether* to, *what* to reach for, and
+*which named patterns* this stack uses. It sits above them: when they conflict, this wins.
+
+### The twelve rules
+
+1. **Every animation must have a purpose.** State it in one sentence before you write it: what
+   state change, spatial relationship, causality or continuity does it communicate? No sentence,
+   no animation.
+2. **Never add animation just to demonstrate animation.** A page that animates to prove it can is
+   a demo, not a product.
+3. **Prefer subtle, premium motion.** The best motion is noticed as *feel*, not as *effect*.
+   2–8px of displacement and 200ms usually beats 40px and 800ms.
+4. **Respect `prefers-reduced-motion`.** A genuine reduced path — final state rendered
+   immediately — never a stub, never hidden content.
+5. **Use GSAP/ScrollTrigger for complex scroll choreography.** Timelines, pinning, scrubbing,
+   orchestration across elements. Register plugins once, centrally.
+6. **Use CSS transitions for simple hover states.** If a CSS transition expresses it, GSAP is
+   over-engineering. CSS first.
+7. **Use Lenis for smooth scrolling only where appropriate** — opt-in and justified, single
+   instance, driven from the GSAP ticker, disabled under reduced motion, destroyed on unmount.
+8. **Use magnetic / cursor effects only when they improve interaction.** A magnetic CTA that
+   makes the primary action feel responsive: yes. A cursor blob on a content site: no.
+9. **Avoid animation overload.** If a reviewer's first comment is about the motion rather than the
+   content, there is too much motion.
+10. **Never more than a few major motion systems on one viewport simultaneously.** Hard budget:
+    **at most two** of { shader/canvas background, scroll-scrubbed choreography, cursor effect,
+    page-wide text animation, parallax } visible at once. Everything else is micro-interaction.
+11. **Keep mobile interactions simpler.** Cursor and magnetic effects have no touch equivalent —
+    disable them at `(pointer: coarse)`, don't ship a dead interaction. Avoid pinned sections on
+    mobile. Fewer, shorter, cheaper.
+12. **Never sacrifice accessibility or performance for effects.** Tab order, focus-visible,
+    contrast and the CWV budgets in §14 are floors. An effect that breaks one of them is a defect.
+
+### Standard patterns
+
+The vocabulary for this stack. Use these names in plans and reviews. Before implementing any of
+them, search `interactive-components` (React Bits and 21st cover most) — reach for a custom
+implementation only after walking the hierarchy.
+
+| Pattern | Purpose it must serve | Implementation | Reduced-motion path |
+|---|---|---|---|
+| **Hero reveal** | Establish hierarchy on entry; headline lands before support copy | GSAP timeline, opacity + `y` ≤ 24px, stagger 60–80ms | Render final state; no delay |
+| **Image reveal** | Draw the eye to the visual as it enters the viewport | Clip-path or mask wipe + slight scale (1.04 → 1) | Image visible immediately |
+| **Staggered content reveal** | Show reading order in a list or grid | `stagger` 40–80ms, cap total under ~600ms | All items visible |
+| **Scroll-triggered section reveal** | Signal a new idea has begun | ScrollTrigger `once: true`, trigger at ~85% viewport | Content visible |
+| **Image parallax** | Depth; separates background from foreground content | ScrollTrigger `scrub`, `yPercent` ≤ 15 | No transform |
+| **Magnetic CTA** | Make the single primary action feel responsive | `gsap.quickTo` on pointer delta, ≤ 8px pull, spring back | Static button |
+| **Hover card** | Preview or affordance on a content card | CSS transition, `translateY(-4px)` + shadow token, 200ms | Instant state change |
+| **Spotlight card** | Guide attention across a grid of equals | Pointer-position CSS custom property + radial gradient | Static surface |
+| **Cursor-follow interaction** | Reinforce a brand's tactility on a signature surface | `quickTo` lerp; **desktop only** | Native cursor |
+| **Text split animation** | Emphasise one headline — the signature line, not every heading | Split by word or char; **never split body copy** | Full text rendered |
+| **Horizontal scroll section** | Content that is genuinely sequential (process, timeline, gallery) | ScrollTrigger pin + `x` scrub; **vertical stack on mobile** | Native horizontal scroll |
+| **Gallery reveal** | Present a body of work as a set | Staggered mask reveal, or a React Bits gallery component | All items visible |
+| **Page transition** | Preserve continuity between routes | Short (≤ 300ms) fade/slide; never block content or delay LCP | Instant navigation |
+| **Nav scroll-state transformation** | Reclaim space and signal depth once scrolling starts | Class toggle at a scroll threshold, CSS transition on height/background | Instant state change |
+
+**Accessibility floor for all of them:** content is present in the DOM and visible if JS fails;
+tab order is unchanged; focus is never trapped; `:focus-visible` survives the effect.
+
+**Cleanup is not optional:** every GSAP timeline and ScrollTrigger is killed on unmount
+(`gsap.context()` / `useGSAP` + revert). Leaked ScrollTriggers are the top cause of scroll bugs.
+
+### COMPONENT USAGE RULE
+
+**Claude must NOT build every UI element from scratch.**
+
+Before creating any complex interactive component, **search** — in this order:
+
+1. **Existing project components** — it may already be built. A second implementation is a bug.
+2. **shadcn** — primitives and accessible behaviour (dialog, select, combobox, form, table).
+3. **21st** — composed blocks, themes, templates.
+4. **React Bits** — animated and interaction-led components.
+5. **Aceternity** — secondary; only if 1–4 genuinely lack an equivalent, and say which you looked for.
+6. **Custom implementation** — only with the hierarchy walk documented.
+
+Then decide explicitly: **reuse / adapt / compose / custom build.**
+
+**All components must conform to the existing design system.** External components arrive with
+placeholder styling: strip hardcoded colours, radii, shadows and sizes, and re-theme to the
+project's tokens. Preserve the underlying accessibility wiring while restyling. A reviewer should
+not be able to tell which components came from a registry.
+
+See `component-discovery` and `interactive-components` for the full workflow.
+
+---
+
+## IMAGE & VISUAL CONTENT CONSTITUTION
+
+**Every major landing page must consciously decide whether visual content is required** — section
+by section, written down, before implementation. The decision may be "no". The decision may not
+be "we didn't think about it".
+
+**Do not leave websites visually empty by default.** A wall of well-set type with no visual
+anchor is as much a failure of art direction as a page of stock photos. Both are the result of
+not deciding.
+
+**Equally: do not force images into sections where they do not improve communication.** An image
+that exists to break up text is filler; whitespace breaks up text.
+
+### Per-section defaults
+
+These are starting positions, not obligations. Each is overridden by the brief.
+
+| Section | Default |
+|---|---|
+| **Hero** | A high-quality visual or generated artwork, unless the brand is deliberately type-led. This is where the best asset goes. |
+| **About** | Contextual photography or editorial imagery **where appropriate** — real place, real people, real process. Generic office photography is worse than nothing. |
+| **Services** | Visual storytelling **where beneficial**. Often better served by a diagram or an SVG system than by photography. |
+| **Portfolio / Work** | **Real work imagery.** Never stock, never generated. This section is evidence; fabricating it is dishonest. |
+| **Testimonials** | **Real portraits only** when available and the person has agreed. Otherwise no portrait — a name and role is fine. **Never generate a face for a testimonial.** |
+| **CTA** | A supporting visual **only when it strengthens conversion**. Usually it doesn't; usually it competes with the button. |
+| **Pricing / comparison / FAQ / spec** | Default NO. These are decision surfaces; imagery slows them. |
+
+### IMAGE USAGE RULE
+
+When building a website, ask internally for every section:
+
+> **"Would this section communicate better with a visual?"**
+
+If **no** — say why in the plan, and let typography, space and layout do the work.
+
+If **yes**, run this sequence:
+
+1. **Search Pinterest for references** if connected — `pinterest-art-direction`. Analyse the
+   visual direction: typography, composition, palette, photography direction. If Pinterest isn't
+   connected, use client assets, supplied reference URLs, or `ui-ux-pro-max --domain style`.
+2. **Analyse the visual direction** and state the through-line in one sentence. Convert it into
+   *your own* direction — never copy a reference.
+3. **Search licensed image sources** — `image-sourcing` via the `imagebank` MCP. Compare at least
+   five candidates against the spec; pick on composition and focal point, not prettiness.
+4. **If no suitable image exists, generate with Gemini** — `image-generation` via the
+   `nanobanana` MCP. Prefer an original generated asset over a licensed photo that is about
+   nothing.
+5. **Optimise** — WebP, sized to 2× the largest rendered width, via `download_image` or
+   `optimize_local_image`.
+6. **Integrate using `next/image`** — explicit `width`/`height`, accurate `sizes`, `priority` on
+   the LCP image only, meaningful `alt`.
+7. **Add the responsive crop** — `object-position` at the focal point, or art-directed
+   `<picture>` sources. Verify at 375 / 768 / 1024 / 1440 with a real screenshot.
+8. **Add subtle motion if appropriate** — image reveal or parallax from the pattern table, within
+   the motion budget, with a reduced-motion path.
+
+### Non-negotiables
+
+- **Licensing is tracked.** Every sourced or generated image is recorded in
+  `public/images/image-sources.json` with source, licence, attribution requirement and where it's
+  used. Unsplash attribution appears **on the site**, not only in the file.
+- **Self-host. Do not hotlink** unless a licence requires serving from the provider's CDN — and
+  then write down why.
+- **Never download Pinterest images into a site.** Pinterest is reference only.
+- **Never generate imagery presented as documentary evidence** — real people, real testimonials,
+  real product photography, real completed work.
+- **No placeholders.** A "swap this later" image never gets swapped. Ship the real asset or ship
+  no image.
+- **Alt text describes meaning**, or is `alt=""` for genuinely decorative imagery.
+- The banned aesthetics in §25 apply to imagery in full: no gradient-mesh heroes, no floating
+  glass shapes, no laughing-team-at-laptop, no abstract 3D blobs.
+
+---
+
 ## Operating notes
 
 - `ui-ux-pro-max` search:
@@ -353,5 +528,15 @@ and the copy, the art direction has failed. Start again at VISUAL DIRECTION.
 - Let `ui-ux-pro-max` set **tokens**; let `frontend-design` set **attitude**. Data for
   correctness, taste for distinctiveness.
 - Blocker/High findings gate completion. Medium/Nit do not — keep momentum.
-- See `docs/STACK.md` (why each tool), `docs/SETUP.md` (install), `docs/WORKFLOW.md` (worked
-  example).
+- **Visual intelligence layer:** `visual-art-direction` decides, `image-sourcing` and
+  `image-generation` execute, `pinterest-art-direction` supplies references. Decide before you
+  execute — searching or generating first and rationalising after is how stock pages happen.
+- **Component layer:** `component-discovery` for structural/functional components,
+  `interactive-components` for motion and interaction (and it owns the selection hierarchy).
+  React Bits and Aceternity need **no extra MCP** — register them as shadcn registry namespaces
+  in the consuming project's `components.json`.
+- **API keys** live in `.env` (git-ignored) — never in `.mcp.json`, a skill, or a commit. Copy
+  `.env.example` and fill in only what you need; every server degrades gracefully when its key is
+  absent. See `docs/INSTALL.md`.
+- See `docs/STACK.md` (why each tool), `docs/SETUP.md` and `docs/INSTALL.md` (install),
+  `docs/WORKFLOW.md` (worked example), `docs/GAP-REPORT.md` (what this upgrade added and why).

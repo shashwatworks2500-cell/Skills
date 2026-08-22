@@ -12,6 +12,34 @@
     "shadcn": {
       "command": "npx",
       "args": ["-y", "shadcn@latest", "mcp"]
+    },
+    "imagebank": {
+      "command": "npx",
+      "args": ["-y", "imagebank-mcp@1.0.0"],
+      "env": {
+        "PEXELS_API_KEY": "${PEXELS_API_KEY:-}",
+        "UNSPLASH_ACCESS_KEY": "${UNSPLASH_ACCESS_KEY:-}",
+        "PIXABAY_API_KEY": "${PIXABAY_API_KEY:-}"
+      }
+    },
+    "nanobanana": {
+      "command": "npx",
+      "args": ["-y", "@ycse/nanobanana-mcp@1.1.1"],
+      "env": {
+        "GOOGLE_AI_API_KEY": "${GOOGLE_AI_API_KEY:-}",
+        "GEMINI_API_KEY": "${GEMINI_API_KEY:-}"
+      }
+    },
+    "21st": {
+      "type": "http",
+      "url": "https://21st.dev/api/mcp",
+      "headers": {
+        "x-api-key": "${TWENTY_FIRST_API_KEY:-}"
+      }
+    },
+    "pinterest": {
+      "type": "http",
+      "url": "https://pinterest-mcp.orange-tooth-1f40.workers.dev/mcp"
     }
   }
 }

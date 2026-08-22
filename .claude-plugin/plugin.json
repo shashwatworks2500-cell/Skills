@@ -1,10 +1,22 @@
 {
   "name": "web-design-stack",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Agency-grade website design environment: UI/UX Pro Max design intelligence, Taste design skills, browser-driven visual QA, and a 15-stage design workflow from research to final build.",
-  "author": { "name": "shashwatworks2500-cell" },
+  "author": {
+    "name": "shashwatworks2500-cell"
+  },
   "repository": "https://github.com/shashwatworks2500-cell/Skills",
   "license": "MIT",
-  "keywords": ["design", "ui", "ux", "website", "nextjs", "tailwind", "shadcn", "accessibility", "performance"],
+  "keywords": [
+    "design",
+    "ui",
+    "ux",
+    "website",
+    "nextjs",
+    "tailwind",
+    "shadcn",
+    "accessibility",
+    "performance"
+  ],
   "mcpServers": "./.mcp.json"
 }

@@ -29,6 +29,13 @@ component architecture · semantic HTML
 **Motion** — GSAP · Lenis · Three.js / React Three Fiber when justified · micro-interactions ·
 `prefers-reduced-motion` compliance
 
+**Imagery** — art direction and the image decision framework · licensed stock search
+(Pexels / Unsplash / Pixabay) · Gemini image generation and editing · WebP optimisation ·
+responsive art-directed crops · licence and attribution tracking
+
+**Components** — shadcn/ui primitives · 21st catalogue · React Bits animated components ·
+Aceternity effects · a strict selection hierarchy and token-adaptation rules
+
 **Quality** — responsive design (375 / 768 / 1024 / 1440) · WCAG 2.1 AA accessibility · SEO ·
 Core Web Vitals · browser QA · visual QA · code review · security review
 
@@ -42,21 +49,29 @@ Three layers, kept deliberately separate:
 |---|---|---|
 | **Knowledge** | `ui-ux-pro-max` | Tokens. 79 styles, 192 palettes, 74 font pairings, 119 UX guidelines, 17 GSAP presets, 22 stacks — searchable offline. |
 | **Taste** | `frontend-design` | Attitude. One committed tone; rejects templated defaults. |
+| **Art direction** | `visual-art-direction`, `pinterest-art-direction` + Pinterest MCP | Decides what the page should *show*, before deciding how it looks. |
+| **Imagery** | `image-sourcing` + imagebank MCP, `image-generation` + Gemini MCP | Real licensed photography, or original generated assets — sourced, optimised, attributed. |
+| **Components** | shadcn MCP (+ React Bits / Aceternity registries), 21st MCP | Search before building. Adapt to the tokens, never ship registry defaults. |
 | **Feedback** | Playwright + Chrome DevTools MCP | Reality. Screenshots, interaction states, console, Lighthouse. |
 
 The governing rule: *let `ui-ux-pro-max` set tokens, let `frontend-design` set attitude.*
-Data for correctness, taste for distinctiveness.
+Data for correctness, taste for distinctiveness. Art direction decides; imagery executes.
 
 ### The workflow
 
 ```
-RESEARCH → INFORMATION ARCHITECTURE → DESIGN SYSTEM → VISUAL DIRECTION →
-IMPLEMENTATION → RESPONSIVE → ANIMATION → ACCESSIBILITY → PERFORMANCE →
-BROWSER QA → VISUAL CRITIQUE → POLISH → CODE REVIEW → SECURITY REVIEW → FINAL BUILD
+DISCOVERY → DESIGN BRIEF → ART DIRECTION → REFERENCE RESEARCH → IMAGE STRATEGY →
+DESIGN SYSTEM → COMPONENT DISCOVERY → INFORMATION ARCHITECTURE → VISUAL DESIGN →
+IMPLEMENTATION → INTERACTION DESIGN → ANIMATION → RESPONSIVE → ACCESSIBILITY →
+PERFORMANCE → BROWSER QA → VISUAL CRITIQUE → POLISH → CODE REVIEW → SECURITY →
+FINAL AUDIT
 ```
 
 **BROWSER QA** and **VISUAL CRITIQUE** are hard gates. A UI change nobody has looked at in a
 real browser is not finished.
+
+**ART DIRECTION** and **IMAGE STRATEGY** are the second hard gate for any page with a visual
+surface. A page whose imagery nobody decided is a page with stock photos on it.
 
 ### The constitution
 
@@ -105,6 +120,7 @@ Its final test:
 | UI/UX Pro Max + 6 companions | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 2.15.0 | MIT © Next Level Builder |
 | Taste (32 skills) | [tyfarrago-hub/taste](https://github.com/tyfarrago-hub/taste) | `acbb3e9` | MIT © Ty Farrago |
 | Design stack foundation | [ui-ux-pro-max-skill `/stack`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/stack) | `bc826e2` | MIT © Next Level Builder |
+| Visual intelligence skills (6) | original work of this repository | 1.1.0 | MIT |
 
 ### Installed from source by `scripts/install.sh`
 
@@ -119,6 +135,20 @@ Its final test:
 | Playwright MCP | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp) | latest | Apache-2.0 |
 | Chrome DevTools MCP | [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) | latest | Apache-2.0 |
 | shadcn MCP | [shadcn-ui/ui](https://github.com/shadcn-ui/ui) | latest | MIT |
+| imagebank MCP | [romuloquintanilha/imagebank-mcp](https://github.com/romuloquintanilha/imagebank-mcp) | 1.0.0 | MIT |
+| nanobanana MCP (Gemini) | [tygwan/nanobanana-mcp](https://github.com/tygwan/nanobanana-mcp) | 1.1.1 | MIT |
+| 21st MCP | [21st-dev/magic-mcp](https://github.com/21st-dev/magic-mcp) | remote HTTP | — |
+| Pinterest MCP | [what-name/pinterest-mcp](https://github.com/what-name/pinterest-mcp) | remote HTTP | MIT |
+| React Bits | [DavidHDev/react-bits](https://github.com/DavidHDev/react-bits) | shadcn registry | MIT |
+| Aceternity | [ui.aceternity.com](https://ui.aceternity.com) | shadcn registry | upstream |
+
+React Bits and Aceternity add **no MCP server** — they publish shadcn-compatible registries,
+so the shadcn MCP already installed reaches them. Register the namespaces in your project's
+`components.json`; see [`skills/interactive-components`](skills/interactive-components/SKILL.md).
+
+The four new MCP servers need API keys. Copy [`.env.example`](.env.example) to `.env` (which is
+git-ignored) and fill in only what you need — every server degrades gracefully without its key.
+See [`docs/INSTALL.md`](docs/INSTALL.md#api-keys).
 
 These six plugins are **not** copied here. They are marketplace-managed, and vendoring them
 would fork them and break `claude plugin update`. `scripts/install.sh` installs each from its
@@ -134,6 +164,7 @@ official source. Full provenance — including commit SHAs and install methods �
 ./scripts/install.sh --into ../app   # install into another project
 ./scripts/verify.sh                  # verify everything (non-zero exit on failure)
 ./scripts/update-skills.sh           # refresh vendored skills from upstream
+npm run verify                       # same as scripts/verify.sh
 npm run audit -- --url http://localhost:3000
 ```
 

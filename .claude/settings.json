@@ -9,7 +9,15 @@
       "Read(//home/**)",
       "mcp__playwright",
       "mcp__chrome-devtools",
-      "mcp__shadcn"
+      "mcp__shadcn",
+      "mcp__imagebank",
+      "mcp__nanobanana",
+      "mcp__21st",
+      "Bash(npm run verify:*)",
+      "Bash(bash scripts/verify.sh:*)"
+    ],
+    "ask": [
+      "mcp__pinterest"
     ]
   }
 }

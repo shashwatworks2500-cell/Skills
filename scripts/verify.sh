@@ -75,7 +75,7 @@ done
 # ── Skills ───────────────────────────────────────────────────────────────────
 head_ "Skills"
 SKILL_COUNT=$(ls -d skills/*/ 2>/dev/null | wc -l | tr -d ' ')
-[ "$SKILL_COUNT" -ge 30 ] && pass "$SKILL_COUNT skills present" || fail "only $SKILL_COUNT skills (expected 30+)"
+[ "$SKILL_COUNT" -ge 45 ] && pass "$SKILL_COUNT skills present" || fail "only $SKILL_COUNT skills (expected 45+)"
 
 BAD=0
 for d in skills/*/; do
@@ -117,10 +117,51 @@ done
 
 # ── MCP configuration ────────────────────────────────────────────────────────
 head_ "MCP configuration"
-for s in playwright chrome-devtools shadcn; do
+for s in playwright chrome-devtools shadcn imagebank nanobanana; do
   cmd=$(jq -r --arg s "$s" '.mcpServers[$s] | (.command // "") + " " + ((.args // []) | join(" "))' .mcp.json 2>/dev/null)
   [ -n "${cmd// /}" ] && pass "$s → $cmd" || fail "$s not configured"
 done
+for s in 21st pinterest; do
+  url=$(jq -r --arg s "$s" '.mcpServers[$s].url // ""' .mcp.json 2>/dev/null)
+  [ -n "$url" ] && pass "$s → $url (http)" || fail "$s not configured"
+done
+
+# Every server name must be unique (jq would silently keep the last duplicate).
+DECLARED=$(jq -r '.mcpServers | keys | length' .mcp.json 2>/dev/null)
+RAW=$(grep -cE '^\s{4}"[a-z0-9-]+": \{' .mcp.json 2>/dev/null)
+[ "$DECLARED" = "$RAW" ] && pass "$DECLARED MCP servers, no duplicate keys" \
+                         || fail "duplicate MCP server keys ($RAW raw vs $DECLARED parsed)"
+
+# No literal credential may appear in .mcp.json — only ${VAR} expansions.
+if jq -r '.mcpServers[] | ((.env // {}) | to_entries[] | .value), ((.headers // {}) | to_entries[] | .value)' .mcp.json 2>/dev/null \
+   | grep -qvE '^\$\{[A-Z_][A-Z0-9_]*(:-)?\}$'; then
+  fail ".mcp.json contains a literal env/header value (must be a \${VAR} expansion)"
+else
+  pass ".mcp.json passes all secrets through \${VAR} expansions only"
+fi
+
+# ── Visual intelligence + component skills ───────────────────────────────────
+head_ "Visual intelligence & component skills"
+for s in visual-art-direction image-sourcing image-generation pinterest-art-direction \
+         component-discovery interactive-components; do
+  [ -f "skills/$s/SKILL.md" ] && pass "$s" || fail "$s missing"
+done
+
+# ── .env.example ─────────────────────────────────────────────────────────────
+head_ "Environment template"
+if [ -f .env.example ]; then
+  pass ".env.example present"
+  for k in PEXELS_API_KEY UNSPLASH_ACCESS_KEY PIXABAY_API_KEY GOOGLE_AI_API_KEY TWENTY_FIRST_API_KEY; do
+    grep -q "^$k=" .env.example && pass "documents $k" || fail ".env.example missing $k"
+  done
+  if grep -qE '^[A-Z_]+=.+$' .env.example; then
+    fail ".env.example has a filled-in value (it must ship empty)"
+  else
+    pass ".env.example ships with no values"
+  fi
+else
+  fail ".env.example missing"
+fi
 
 # ── External plugins ─────────────────────────────────────────────────────────
 head_ "External plugins (installed from source, not vendored)"

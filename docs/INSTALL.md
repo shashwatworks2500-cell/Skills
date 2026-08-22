@@ -122,10 +122,57 @@ Expected tail on success:
 
 ---
 
+## API keys
+
+Four of the seven MCP servers need credentials. **Copy the template and fill in only what you
+need** — every server degrades gracefully when its key is absent, and the rest of the stack is
+unaffected.
+
+```bash
+cp .env.example .env      # .env is git-ignored — never commit it
+```
+
+| Capability | Server | Variable | Where to get it |
+|---|---|---|---|
+| Image search | `imagebank` | `PEXELS_API_KEY` | https://www.pexels.com/api/ — free, no attribution required |
+| | | `UNSPLASH_ACCESS_KEY` | https://unsplash.com/developers — free, **on-site attribution required** |
+| | | `PIXABAY_API_KEY` | https://pixabay.com/api/docs/ — free, no attribution required |
+| Image generation | `nanobanana` | `GOOGLE_AI_API_KEY` | https://aistudio.google.com/apikey — free tier available |
+| Component discovery | `21st` | `TWENTY_FIRST_API_KEY` | https://21st.dev/mcp |
+| Pinterest references | `pinterest` | *(none)* | Browser OAuth on first use — see below |
+
+**At least one** image-search key is required for `search_images` to return results; the server
+prints which providers it found on startup. `GEMINI_API_KEY` is accepted as an alias for
+`GOOGLE_AI_API_KEY`.
+
+**21st:** keys issued by the old *Magic* console were reset upstream and no longer work — you
+need a current 21st key. `npx @21st-dev/cli@latest init --client claude` is an interactive
+alternative that writes the server entry for you.
+
+**Pinterest authentication** works by OAuth, not by an API key. The default `.mcp.json` entry
+points at the maintainer's hosted Cloudflare Worker; on first use Claude Code opens a browser
+consent screen where you authorise access to *your own* Pinterest account. The worker holds the
+token server-side (encrypted KV) and the session carries a bearer token — **no Pinterest
+credential ever enters this repository**. Unauthenticated calls return `401 invalid_token`,
+which is the expected state until you connect.
+
+For client work, self-host instead so you control the token store: fork
+`what-name/pinterest-mcp`, register an app at developers.pinterest.com, deploy with Wrangler, set
+`PINTEREST_CLIENT_ID`, `PINTEREST_CLIENT_SECRET` and `COOKIE_ENCRYPTION_KEY` as **Wrangler
+secrets** (`wrangler secret put …`, never committed), and point the `url` in `.mcp.json` at your
+worker.
+
+**Never commit a key.** `.gitignore` covers `.env` and `.env.*` (with `!.env.example`);
+`.mcp.json` only ever contains `${VAR}` expansions, and `scripts/verify.sh` fails the build if a
+literal value appears there or if a credential-shaped string lands in any tracked file.
+
+---
+
 ## Approve the MCP servers
 
 On first start in a directory containing `.mcp.json`, Claude Code prompts you to approve the
-project MCP servers (**playwright**, **chrome-devtools**, **shadcn**). Approve them.
+project MCP servers (**playwright**, **chrome-devtools**, **shadcn**, **imagebank**,
+**nanobanana**, **21st**, **pinterest**). Approve them.
 `.claude/settings.json` sets `enableAllProjectMcpServers: true` so they load on subsequent
 starts. Confirm with `/mcp`.
 
@@ -133,9 +180,12 @@ If a server fails, run its command by hand to see the error:
 
 ```bash
 npx -y @playwright/mcp@latest
+npx -y imagebank-mcp@1.0.0          # prints which image providers are configured
+npx -y @ycse/nanobanana-mcp@1.1.1   # errors if GOOGLE_AI_API_KEY is unset
 ```
 
-Usually a Node version or a network/proxy problem.
+Usually a Node version or a network/proxy problem. For the two HTTP servers (`21st`,
+`pinterest`), a `401` is authentication, not a failure — set the key or complete the OAuth flow.
 
 ---
 

@@ -1,10 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "name": "ultimate-claude-code-web-design-stack",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "generated": "2026-08-22",
   "repository": "https://github.com/shashwatworks2500-cell/Skills",
-  "description": "Manifest of every component in this stack: source, version, install method, local path, vendored status, and license. Use this to audit or update the stack.",
+  "description": "Manifest of every component in this stack: source, version, install method, local path, vendored status, required API keys and license. Use this to audit or update the stack.",
   "components": [
     {
       "component": "ui-ux-pro-max",
@@ -18,7 +18,7 @@
       "vendored": true,
       "license": "MIT",
       "license_file": "licenses/LICENSE.ui-ux-pro-max",
-      "copyright": "© 2024 Next Level Builder",
+      "copyright": "\u00a9 2024 Next Level Builder",
       "notes": "Authoritative UI/UX Pro Max install. Taste ships an older duplicate (67 styles) which is deliberately excluded. Package 'uipro-cli' is stale per upstream README and must not be used."
     },
     {
@@ -28,7 +28,14 @@
       "version": "2.15.0",
       "commit_sha": "bc826e2267a36d98a2dcf5231e16c30ff546770f",
       "installation_method": "npm i -g ui-ux-pro-max-cli && uipro init --ai claude",
-      "local_path": ["skills/brand/", "skills/design/", "skills/design-system/", "skills/ui-styling/", "skills/banner-design/", "skills/slides/"],
+      "local_path": [
+        "skills/brand/",
+        "skills/design/",
+        "skills/design-system/",
+        "skills/ui-styling/",
+        "skills/banner-design/",
+        "skills/slides/"
+      ],
       "vendored": true,
       "license": "MIT",
       "license_file": "licenses/LICENSE.ui-ux-pro-max",
@@ -42,14 +49,47 @@
       "commit_sha": "acbb3e9c9051e096cb9e5e5cc1af88d56bc05459",
       "installation_method": "git clone + copy skills/* (excluding duplicates)",
       "local_path": "skills/",
-      "skills": ["adapt","animate","audit","bolder","brandkit","clarify","colorize","cosmic-glass-dashboard","critique","delight","design-taste-frontend","distill","emil-design-eng","full-output-enforcement","gpt-taste","harden","high-end-visual-design","image-to-code","imagegen-frontend-mobile","imagegen-frontend-web","industrial-brutalist-ui","layout","minimalist-ui","optimize","overdrive","polish","quieter","redesign-existing-projects","shape","stitch-design-taste","typeset","website"],
+      "skills": [
+        "adapt",
+        "animate",
+        "audit",
+        "bolder",
+        "brandkit",
+        "clarify",
+        "colorize",
+        "cosmic-glass-dashboard",
+        "critique",
+        "delight",
+        "design-taste-frontend",
+        "distill",
+        "emil-design-eng",
+        "full-output-enforcement",
+        "gpt-taste",
+        "harden",
+        "high-end-visual-design",
+        "image-to-code",
+        "imagegen-frontend-mobile",
+        "imagegen-frontend-web",
+        "industrial-brutalist-ui",
+        "layout",
+        "minimalist-ui",
+        "optimize",
+        "overdrive",
+        "polish",
+        "quieter",
+        "redesign-existing-projects",
+        "shape",
+        "stitch-design-taste",
+        "typeset",
+        "website"
+      ],
       "vendored": true,
       "license": "MIT",
       "license_file": "licenses/LICENSE.taste",
-      "copyright": "© 2026 Ty Farrago",
+      "copyright": "\u00a9 2026 Ty Farrago",
       "attribution_file": "licenses/CREDITS.taste.md",
       "excluded": {
-        "ui-ux-pro-max": "stale duplicate — 67 styles / 564K vs official 79 styles / 3.6M",
+        "ui-ux-pro-max": "stale duplicate \u2014 67 styles / 564K vs official 79 styles / 3.6M",
         "impeccable": "umbrella skill overlapping every verb skill; upstream declares it a derivative of Anthropic frontend-design, which is installed directly"
       },
       "license_caveat": "6 skills (design-taste-frontend, minimalist-ui, full-output-enforcement, redesign-existing-projects, industrial-brutalist-ui, high-end-visual-design) are vendored by upstream from lexnlin/learn2vibecode.dev, which ships NO license. See NOTICE.md."
@@ -61,14 +101,24 @@
       "subpath": "stack/",
       "commit_sha": "bc826e2267a36d98a2dcf5231e16c30ff546770f",
       "installation_method": "vendored from upstream stack/ directory",
-      "local_path": [".mcp.json", "agents/design-review.md", "commands/design-plan.md", "commands/design-review.md", "scripts/design-audit.mjs", ".github/workflows/design-review.yml", "docs/SETUP.md", "docs/STACK.md", "docs/WORKFLOW.md"],
+      "local_path": [
+        ".mcp.json",
+        "agents/design-review.md",
+        "commands/design-plan.md",
+        "commands/design-review.md",
+        "scripts/design-audit.mjs",
+        ".github/workflows/design-review.yml",
+        "docs/SETUP.md",
+        "docs/STACK.md",
+        "docs/WORKFLOW.md"
+      ],
       "vendored": true,
       "license": "MIT",
       "license_file": "licenses/LICENSE.ui-ux-pro-max"
     },
     {
       "component": "frontend-design",
-      "role": "taste layer — distinctive, non-generic visual direction",
+      "role": "taste layer \u2014 distinctive, non-generic visual direction",
       "source_repository": "https://github.com/anthropics/claude-plugins-official",
       "subpath": "plugins/frontend-design",
       "version": "unversioned",
@@ -130,7 +180,7 @@
       "vendored": false,
       "vendor_reason": "Plugin with runtime Node lifecycle hooks and a statusline script; must be installed as a plugin to function.",
       "license": "MIT",
-      "copyright": "© 2026 DietrichGebert"
+      "copyright": "\u00a9 2026 DietrichGebert"
     },
     {
       "component": "claude-mem",
@@ -147,7 +197,7 @@
     },
     {
       "component": "playwright-mcp",
-      "role": "browser QA — screenshots, interaction, console",
+      "role": "browser QA \u2014 screenshots, interaction, console",
       "source_repository": "https://github.com/microsoft/playwright-mcp",
       "npm_package": "@playwright/mcp",
       "version": "latest (floating)",
@@ -187,10 +237,175 @@
       "source_repository": "https://github.com/shashwatworks2500-cell/Skills",
       "version": "1.0.0",
       "installation_method": "vendored (original work)",
-      "local_path": ["CLAUDE.md", "skills/web-design-constitution/"],
+      "local_path": [
+        "CLAUDE.md",
+        "skills/web-design-constitution/"
+      ],
       "vendored": true,
       "license": "MIT",
       "copyright": "original work of this repository"
+    },
+    {
+      "component": "visual-intelligence-skills",
+      "role": "art direction, image sourcing, image generation, Pinterest reference analysis, component discovery, interactive components",
+      "source_repository": "https://github.com/shashwatworks2500-cell/Skills",
+      "version": "1.1.0",
+      "installation_method": "vendored (original work of this repository)",
+      "local_path": [
+        "skills/visual-art-direction/",
+        "skills/image-sourcing/",
+        "skills/image-generation/",
+        "skills/pinterest-art-direction/",
+        "skills/component-discovery/",
+        "skills/interactive-components/"
+      ],
+      "vendored": true,
+      "license": "MIT",
+      "api_keys_required": "none (the skills themselves); the MCP servers they drive have their own \u2014 see below",
+      "copyright": "original work of this repository"
+    },
+    {
+      "component": "imagebank-mcp",
+      "role": "image sourcing \u2014 search and download licensed stock photography from Pexels, Unsplash and Pixabay with WebP conversion",
+      "source_repository": "https://github.com/romuloquintanilha/imagebank-mcp",
+      "npm_package": "imagebank-mcp",
+      "version": "1.0.0 (pinned)",
+      "installation_method": "declared in .mcp.json; npx-resolved at runtime",
+      "local_path": ".mcp.json",
+      "vendored": false,
+      "vendor_reason": "MCP server resolved via npx at runtime.",
+      "license": "MIT",
+      "tools": [
+        "search_images",
+        "download_image",
+        "optimize_local_image"
+      ],
+      "api_keys_required": [
+        "PEXELS_API_KEY",
+        "UNSPLASH_ACCESS_KEY",
+        "PIXABAY_API_KEY"
+      ],
+      "api_keys_note": "At least one required for results. All free tiers. Unsplash requires on-site attribution. Server reports configured providers on startup.",
+      "verified": "npx launch confirmed: '[imagebank-mcp] running. Providers configured: NONE (set API keys)'; tools/list returned 3 tools",
+      "used_by": "skills/image-sourcing"
+    },
+    {
+      "component": "nanobanana-mcp",
+      "role": "AI image generation and editing via Google Gemini \u2014 hero, product, editorial, background artwork, illustration",
+      "source_repository": "https://github.com/tygwan/nanobanana-mcp",
+      "npm_package": "@ycse/nanobanana-mcp",
+      "version": "1.1.1 (pinned)",
+      "installation_method": "declared in .mcp.json; npx-resolved at runtime",
+      "local_path": ".mcp.json",
+      "vendored": false,
+      "vendor_reason": "MCP server resolved via npx at runtime.",
+      "license": "MIT",
+      "tools": [
+        "set_model",
+        "set_aspect_ratio",
+        "gemini_generate_image",
+        "gemini_edit_image",
+        "gemini_chat",
+        "get_image_history",
+        "clear_conversation"
+      ],
+      "api_keys_required": [
+        "GOOGLE_AI_API_KEY"
+      ],
+      "api_keys_note": "Free tier at https://aistudio.google.com/apikey. GEMINI_API_KEY accepted as an alias.",
+      "verified": "npx launch confirmed (exits with 'GOOGLE_AI_API_KEY environment variable is required'); tools/list returned 7 tools",
+      "used_by": "skills/image-generation",
+      "alternative_evaluated": {
+        "component": "guinacio/claude-image-gen",
+        "outcome": "NOT INSTALLED",
+        "reason": "Not published to npm (both 'claude-image-gen' and '@guinacio/claude-image-gen' return 404). Requires a Claude Code plugin install or a git clone plus build, then an absolute path to mcp-server/build/bundle.js \u2014 which cannot be expressed as a portable project .mcp.json entry. Overlaps 100% with nanobanana-mcp; Phase 4 forbids installing both. Remains available as an optional user-scope plugin: /plugin install guinacio/claude-image-gen"
+      }
+    },
+    {
+      "component": "21st-mcp",
+      "role": "component discovery \u2014 catalogue search across components, themes and templates; UI generation with variants",
+      "source_repository": "https://github.com/21st-dev/magic-mcp",
+      "endpoint": "https://21st.dev/api/mcp",
+      "version": "current unified 21st MCP (remote HTTP)",
+      "installation_method": "declared in .mcp.json as an http server with an x-api-key header expansion; alternatively 'npx @21st-dev/cli@latest init --client claude'",
+      "npm_package": "@21st-dev/cli (v1.16.0 \u2014 interactive setup only; the server itself is remote)",
+      "local_path": ".mcp.json",
+      "vendored": false,
+      "vendor_reason": "Remote HTTP MCP server; nothing to vendor.",
+      "license": "not stated upstream",
+      "api_keys_required": [
+        "TWENTY_FIRST_API_KEY"
+      ],
+      "api_keys_note": "Generate at https://21st.dev/mcp. Old 'Magic' console keys were reset upstream and no longer work.",
+      "verified": "endpoint reachable \u2014 unauthenticated tools/list returns JSON-RPC -32001 'Not authenticated - your API key is missing or was reset'. Full tool surface NOT verified (requires a key).",
+      "used_by": "skills/component-discovery",
+      "notes": "npm '@21st-dev/magic' (0.2.2) is explicitly a deprecated compatibility proxy upstream and is deliberately NOT used."
+    },
+    {
+      "component": "pinterest-mcp",
+      "role": "visual reference and art-direction research \u2014 inspect boards and pins, search where permissions allow",
+      "source_repository": "https://github.com/what-name/pinterest-mcp",
+      "endpoint": "https://pinterest-mcp.orange-tooth-1f40.workers.dev/mcp",
+      "version": "maintainer-hosted Cloudflare Worker (Pinterest API v5)",
+      "installation_method": "declared in .mcp.json as an http server; browser OAuth on first use",
+      "local_path": ".mcp.json",
+      "vendored": false,
+      "vendor_reason": "Remote HTTP MCP server on Cloudflare Workers.",
+      "license": "MIT",
+      "api_keys_required": [],
+      "api_keys_note": "Hosted route uses browser OAuth \u2014 no key in any repo file. Self-hosting requires PINTEREST_CLIENT_ID, PINTEREST_CLIENT_SECRET and COOKIE_ENCRYPTION_KEY as Wrangler secrets.",
+      "verified": "endpoint reachable \u2014 unauthenticated tools/list returns HTTP 401 {'error':'invalid_token'}. OAuth flow NOT completed (requires interactive browser consent).",
+      "used_by": "skills/pinterest-art-direction",
+      "notes": "Reference only. Write/delete tools (create_pin, update_board, delete_pin) are exposed by the server but must not be called in a design workflow. Pinterest images are never downloaded into a site."
+    },
+    {
+      "component": "react-bits",
+      "role": "animated and interaction-led components \u2014 text animation, cursor effects, scroll effects, galleries, interactive cards, backgrounds, navigation",
+      "source_repository": "https://github.com/DavidHDev/react-bits",
+      "registry": "https://reactbits.dev/r/{name}.json",
+      "version": "live registry (664 items / 166 unique components)",
+      "installation_method": "shadcn registry namespace '@react-bits' in the consuming project's components.json; consumed through the shadcn MCP already installed",
+      "local_path": "consuming project's components.json (documented in skills/interactive-components)",
+      "vendored": false,
+      "vendor_reason": "Components are added as owned source into the consuming project, not into this stack.",
+      "license": "MIT",
+      "api_keys_required": [],
+      "verified": "registry.json fetched \u2014 664 items, 166 unique components; individual items (SplitText-TS-TW, Magnet-TS-TW) return valid shadcn registry-item JSON",
+      "used_by": "skills/interactive-components",
+      "notes": "NO new MCP server added. 'duolabstech/react-bits-mcp-server' was evaluated and rejected: its README claims npm 'react-bits-mcp-server' but that package is not published (404). The shadcn-registry route is used instead \u2014 one search path, no unmaintained server, components land as owned source."
+    },
+    {
+      "component": "aceternity",
+      "role": "secondary source for premium cards, spotlight effects, hover effects, background effects, animated navigation, interactive hero elements",
+      "source_repository": "https://ui.aceternity.com",
+      "registry": "https://ui.aceternity.com/registry/{name}.json",
+      "version": "live registry",
+      "installation_method": "optional shadcn registry namespace '@aceternity' in the consuming project's components.json",
+      "local_path": "consuming project's components.json (documented in skills/interactive-components)",
+      "vendored": false,
+      "license": "see upstream (per-component)",
+      "api_keys_required": [],
+      "verified": "registry.json and registry/spotlight.json fetched \u2014 valid shadcn registry JSON",
+      "used_by": "skills/interactive-components (hierarchy level 5 \u2014 last resort before custom)",
+      "notes": "NO MCP server added. 'devinoldenburg/aceternity-mcp' does not exist (GitHub returns 404). Aceternity overlaps React Bits heavily; it is level 5 in the selection hierarchy and requires a documented justification, to avoid duplicate components and two animation runtimes."
+    }
+  ],
+  "excluded_after_evaluation": [
+    {
+      "candidate": "guinacio/claude-image-gen",
+      "reason": "not npm-distributed; cannot be a portable project .mcp.json entry; 100% overlap with the installed Gemini server"
+    },
+    {
+      "candidate": "duolabstech/react-bits-mcp-server",
+      "reason": "npm package 'react-bits-mcp-server' is not published (404); superseded by the verified React Bits shadcn registry"
+    },
+    {
+      "candidate": "devinoldenburg/aceternity-mcp",
+      "reason": "repository does not exist (HTTP 404); superseded by the verified Aceternity shadcn registry"
+    },
+    {
+      "candidate": "@21st-dev/magic",
+      "reason": "upstream declares it a deprecated compatibility proxy; old Magic API keys were reset"
     }
   ]
 }

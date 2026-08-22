@@ -1,11 +1,12 @@
 {
   "name": "claude-website-design-stack",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "A ready-to-use Claude Code stack that makes the agent good at website design: knowledge (ui-ux-pro-max) + taste (frontend-design) + visual feedback (Playwright/Chrome DevTools MCP) + automated design review.",
+  "description": "An agency-grade Claude Code website design stack: knowledge (ui-ux-pro-max) + taste (frontend-design) + art direction and imagery (visual-art-direction, imagebank, Gemini) + components (shadcn, 21st, React Bits) + visual feedback (Playwright/Chrome DevTools MCP) + automated design review.",
   "type": "module",
   "scripts": {
-    "setup": "bash scripts/setup.sh",
+    "setup": "bash scripts/install.sh",
+    "verify": "bash scripts/verify.sh",
     "audit": "node scripts/design-audit.mjs",
     "audit:file": "node scripts/design-audit.mjs --file ./index.html"
   },
