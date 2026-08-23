@@ -31,6 +31,9 @@ claude-mem-data/
 *.pfx
 
 # Caches / temp
+__pycache__/
+*.pyc
+*.pyo
 .cache/
 tmp/
 temp/
