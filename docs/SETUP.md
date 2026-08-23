@@ -70,12 +70,25 @@ Requires the Figma desktop app. Enable Dev Mode → toggle the MCP server on. Th
 
 Guide: <https://help.figma.com/hc/en-us/articles/39888612464151-Claude-Code-and-Figma-Set-up-the-MCP-server>
 
-### 21st.dev Magic MCP
-Generates React components from a prompt. Get an API key at <https://21st.dev>, then add:
+### 21st.dev MCP
+Generates React components from a prompt. Configured in `.mcp.json` as the `21st` server —
+an HTTP server authenticated by header, not a local `npx` process:
 
 ```json
-"magic": { "command": "npx", "args": ["-y", "@21st-dev/magic@latest"], "env": { "API_KEY": "<your-key>" } }
+"21st": {
+  "type": "http",
+  "url": "https://21st.dev/api/mcp",
+  "headers": { "x-api-key": "${TWENTY_FIRST_API_KEY}" }
+}
 ```
+
+Get an API key at <https://21st.dev/settings/api-keys> and export it as `TWENTY_FIRST_API_KEY`.
+
+The older `@21st-dev/magic` package is deprecated — it is now only a compatibility proxy for
+old configs. Do not use it in new setups.
+
+Requires egress to `21st.dev`. In a sandboxed environment with an allowlist proxy, that host
+must be permitted or the server fails to connect.
 
 Keep keys out of git — prefer `.claude/settings.local.json` or your shell env, both gitignored.
 
