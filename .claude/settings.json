@@ -9,7 +9,8 @@
       "Read(//home/**)",
       "mcp__playwright",
       "mcp__chrome-devtools",
-      "mcp__shadcn"
+      "mcp__shadcn",
+      "mcp__21st"
     ]
   }
 }

@@ -63,12 +63,14 @@ live page: interaction states, responsiveness across 6 viewport tiers, visual po
 AA, edge cases, and console health. Invoke with `/design-review <url>`. The heuristic subset
 also runs headless in CI via `scripts/design-audit.mjs`.
 
-## Optional add-ons (not in default `.mcp.json`)
+## Optional add-ons
 
+- **21st.dev MCP** — generate React components from a prompt ("v0 in your editor"). Configured
+  in `.mcp.json` as the `21st` server; inert until `TWENTY_FIRST_API_KEY` is set, so the base
+  stack still runs with zero secrets. <https://21st.dev/mcp>
 - **Figma Dev Mode MCP** — read a frame's tokens/layout to generate matching code, and push
   Claude-built UI back to the canvas as editable layers. Needs the Figma desktop app + Dev Mode.
+  Not in the default `.mcp.json`.
   <https://help.figma.com/hc/en-us/articles/39888612464151-Claude-Code-and-Figma-Set-up-the-MCP-server>
-- **21st.dev Magic MCP** — generate React components from a prompt ("v0 in your editor"). Needs
-  an API key. <https://github.com/21st-dev/magic-mcp>
 
-Both are opt-in (see `docs/SETUP.md`) so the base stack runs with zero secrets.
+Setup for both is in `docs/SETUP.md`.
