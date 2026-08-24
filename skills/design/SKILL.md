@@ -131,7 +131,7 @@ Load `references/slides-create.md` for the creation workflow.
 
 ## Banner Design (Built-in)
 
-22 art direction styles across social, ads, web, print. Uses `frontend-design`, `ai-artist`, `ai-multimodal`, `chrome-devtools` skills.
+22 art direction styles across social, ads, web, print. Uses `frontend-design`, `imagegen-frontend-web`, `chrome-devtools` skills.
 
 Load `references/banner-sizes-and-styles.md` for complete sizes and styles reference.
 
@@ -139,7 +139,7 @@ Load `references/banner-sizes-and-styles.md` for complete sizes and styles refer
 
 1. **Gather requirements** via `AskUserQuestion` — purpose, platform, content, brand, style, quantity
 2. **Research** — Activate `ui-ux-pro-max`, browse Pinterest for references
-3. **Design** — Create HTML/CSS banner with `frontend-design`, generate visuals with `ai-artist`/`ai-multimodal`
+3. **Design** — Create HTML/CSS banner with `frontend-design`, generate visuals with `imagegen-frontend-web`
 4. **Export** — Screenshot to PNG at exact dimensions via `chrome-devtools`
 5. **Present** — Show all options side-by-side, iterate on feedback
 
@@ -310,4 +310,4 @@ pip install google-genai pillow
 ## Integration
 
 **External sub-skills:** brand, design-system, ui-styling
-**Related Skills:** frontend-design, ui-ux-pro-max, ai-multimodal, chrome-devtools
+**Related Skills:** frontend-design, ui-ux-pro-max, imagegen-frontend-web, chrome-devtools
