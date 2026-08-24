@@ -3,11 +3,23 @@
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"]
+      "args": [
+        "-y", "@playwright/mcp@latest",
+        "--executable-path", "/opt/pw-browsers/chromium",
+        "--headless",
+        "--no-sandbox"
+      ]
     },
     "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest"]
+      "args": [
+        "-y", "chrome-devtools-mcp@latest",
+        "--executablePath=/opt/pw-browsers/chromium",
+        "--headless",
+        "--isolated",
+        "--chrome-arg=--no-sandbox",
+        "--chrome-arg=--disable-setuid-sandbox"
+      ]
     },
     "shadcn": {
       "command": "npx",
