@@ -3,11 +3,23 @@
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"]
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--executable-path",
+        "${CHROME_PATH:-/opt/pw-browsers/chromium}"
+      ]
     },
     "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest"]
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--executablePath",
+        "${CHROME_PATH:-/opt/pw-browsers/chromium}",
+        "--headless",
+        "--chromeArg=--no-sandbox"
+      ]
     },
     "shadcn": {
       "command": "npx",
