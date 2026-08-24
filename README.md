@@ -92,7 +92,7 @@ Its final test:
 | `/layout` `/typeset` `/colorize` `/distill` `/bolder` `/quieter` | Targeted refinements |
 | `/code-review` `/ponytail-review` | Correctness and over-engineering review |
 
-40 skills total — run `./scripts/verify.sh` for the full inventory.
+43 skills total — run `./scripts/verify.sh` for the full inventory.
 
 ---
 

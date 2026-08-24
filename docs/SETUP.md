@@ -79,6 +79,51 @@ Generates React components from a prompt. Get an API key at <https://21st.dev>, 
 
 Keep keys out of git — prefer `.claude/settings.local.json` or your shell env, both gitignored.
 
+### Image-sourcing providers (Pexels / Unsplash / Pixabay)
+
+The `image-sourcing` skill searches all three and falls through to the next on a missing key,
+a non-2xx response, a connection failure, or zero results. Export whichever you have — none is
+individually required, but with none of them the real-photography path is unavailable:
+
+```bash
+export PEXELS_API_KEY=...        # https://www.pexels.com/api/
+export UNSPLASH_ACCESS_KEY=...   # https://unsplash.com/developers
+export PIXABAY_API_KEY=...       # https://pixabay.com/api/docs/
+```
+
+Unsplash additionally requires attribution and a trigger of the `download_location` endpoint
+when an image is used. Never commit a key; never hotlink a provider CDN in production.
+
+### AI image generation (Gemini / Nano Banana)
+
+```bash
+export GOOGLE_AI_API_KEY=...     # https://aistudio.google.com/apikey
+```
+
+Image models: `gemini-2.5-flash-image` (fast), `gemini-3-pro-image` (quality). Image generation
+is **not** on the free tier — a key with no billing returns HTTP 429
+(`generate_content_free_tier_requests, limit: 0`) even though model listing succeeds. Enable
+billing on the Google Cloud project behind the key before relying on generation.
+
+### Component registries (React Bits / Aceternity / 21st.dev)
+
+Fronted by the **shadcn MCP** — no extra MCP server needed. Copy `templates/components.json`
+into your project and export the 21st.dev key if you use that registry:
+
+```bash
+export TWENTY_FIRST_API_KEY=...  # https://21st.dev
+```
+
+Verify a registry resolves before relying on it: `npx shadcn@latest view @react-bits`.
+
+### Pinterest (visual research)
+
+Public board and search research needs **no credentials** — drive it with the Playwright MCP.
+The Pinterest v5 API additionally needs an OAuth app (register at `developers.pinterest.com`,
+run the authorization-code flow, export `PINTEREST_ACCESS_TOKEN`). This stack ships no
+Pinterest credentials and does not require them; Behance, Dribbble, Awwwards, Savee or Cosmos
+substitute cleanly.
+
 ## Troubleshooting
 
 - **`/mcp` shows a server failed** — run its command manually to see the error, e.g.

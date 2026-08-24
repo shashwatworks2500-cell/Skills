@@ -11,7 +11,9 @@ The stack has three layers, and each has one job:
 | **Knowledge** | `ui-ux-pro-max` skill (`skills/ui-ux-pro-max`, or `.claude/skills/ui-ux-pro-max` in a project install) | What to build. Tokens, palettes, type pairings, UX rules, Core Web Vitals budgets. |
 | **Taste** | `frontend-design` plugin skill | Make it distinctive. Attitude, art direction, anti-default. |
 | **Feedback** | `playwright` + `chrome-devtools` MCP | Actually see the rendered result and fix it. |
-| **Components** | `shadcn` MCP | Add primitives instead of hand-rolling them. |
+| **Components** | `shadcn` MCP (shadcn + React Bits + Aceternity + 21st.dev registries) | Add primitives instead of hand-rolling them. |
+| **Imagery** | `image-sourcing` skill, `imagegen-frontend-web` / `image-to-code` | Real photography vs generated. Licence, crop, weight. |
+| **Motion** | `interaction-patterns` skill + GSAP / Lenis | Signature interactions with a fallback for every one. |
 | **Review** | `design-review` agent, `code-review`, `claude-security` | Gate before done. |
 
 ---
@@ -22,8 +24,9 @@ Every website task runs this sequence. Do not skip stages. Do not reorder them.
 
 ```
 RESEARCH → INFORMATION ARCHITECTURE → DESIGN SYSTEM → VISUAL DIRECTION →
-IMPLEMENTATION → RESPONSIVE → ANIMATION → ACCESSIBILITY → PERFORMANCE →
-BROWSER QA → VISUAL CRITIQUE → POLISH → CODE REVIEW → SECURITY REVIEW → FINAL BUILD
+IMAGE STRATEGY → COMPONENT STRATEGY → IMPLEMENTATION → RESPONSIVE → ANIMATION →
+ACCESSIBILITY → PERFORMANCE → BROWSER QA → VISUAL CRITIQUE → POLISH →
+CODE REVIEW → SECURITY REVIEW → FINAL BUILD
 ```
 
 | # | Stage | Do this | Primary tool |
@@ -32,19 +35,21 @@ BROWSER QA → VISUAL CRITIQUE → POLISH → CODE REVIEW → SECURITY REVIEW �
 | 2 | **INFORMATION ARCHITECTURE** | Page inventory, nav model, content hierarchy, conversion path. Structure before pixels. | `/shape`, `ui-ux-pro-max --domain landing` |
 | 3 | **DESIGN SYSTEM** | Generate concrete tokens: color, type, spacing, radius, elevation. This is the source of truth. | `/design-plan`, `ui-ux-pro-max --design-system` |
 | 4 | **VISUAL DIRECTION** | Commit to ONE tone. Pick the signature element. Reject defaults explicitly. | `frontend-design`, `/high-end-visual-design` |
-| 5 | **IMPLEMENTATION** | Build with the tokens. Components via shadcn MCP. | `shadcn` MCP |
-| 6 | **RESPONSIVE** | Verify 375 / 768 / 1024 / 1440. Content reflows, never shrinks. | `/adapt` |
-| 7 | **ANIMATION** | Only motion that carries meaning. Respect reduced-motion. | `/animate` |
-| 8 | **ACCESSIBILITY** | WCAG 2.1 AA floor. Keyboard, contrast, semantics, focus. | `/audit` |
-| 9 | **PERFORMANCE** | Core Web Vitals budgets. Images, fonts, bundle. | `/optimize`, Lighthouse via chrome-devtools MCP |
-| 10 | **BROWSER QA** | Open the real page. Screenshot. Exercise states. Read the console. | `playwright` MCP |
-| 11 | **VISUAL CRITIQUE** | Ranked findings across viewports. | `/design-review`, `/critique` |
-| 12 | **POLISH** | Alignment, optical spacing, micro-detail. | `/polish` |
-| 13 | **CODE REVIEW** | Correctness, conventions, over-engineering. | `/code-review`, `/ponytail-review` |
-| 14 | **SECURITY REVIEW** | Injection, XSS, secrets, SSRF, dependency risk. | `claude-security` |
-| 15 | **FINAL BUILD** | Typecheck, lint, build, re-verify. Green or not done. | build scripts |
+| 5 | **IMAGE STRATEGY** | Decide photo vs generated per slot. Source, licence, crop, budget. Never invent URLs. | `/image-sourcing`, `imagegen-frontend-web` |
+| 6 | **COMPONENT STRATEGY** | Choose sources before building. Evaluate a11y, mobile, weight. Don't hand-roll primitives. | `/component-discovery`, `shadcn` MCP |
+| 7 | **IMPLEMENTATION** | Build with the tokens. Components via shadcn MCP. | `shadcn` MCP |
+| 8 | **RESPONSIVE** | Verify 375 / 768 / 1024 / 1440. Content reflows, never shrinks. | `/adapt` |
+| 9 | **ANIMATION** | Only motion that carries meaning. Respect reduced-motion. | `/animate`, `/interaction-patterns` |
+| 10 | **ACCESSIBILITY** | WCAG 2.1 AA floor. Keyboard, contrast, semantics, focus. | `/audit` |
+| 11 | **PERFORMANCE** | Core Web Vitals budgets. Images, fonts, bundle. | `/optimize`, Lighthouse via chrome-devtools MCP |
+| 12 | **BROWSER QA** | Open the real page. Screenshot. Exercise states. Read the console. | `playwright` MCP |
+| 13 | **VISUAL CRITIQUE** | Ranked findings across viewports. | `/design-review`, `/critique` |
+| 14 | **POLISH** | Alignment, optical spacing, micro-detail. | `/polish` |
+| 15 | **CODE REVIEW** | Correctness, conventions, over-engineering. | `/code-review`, `/ponytail-review` |
+| 16 | **SECURITY REVIEW** | Injection, XSS, secrets, SSRF, dependency risk. | `claude-security` |
+| 17 | **FINAL BUILD** | Typecheck, lint, build, re-verify. Green or not done. | build scripts |
 
-**Hard gate:** stages 10 and 11 are mandatory. *A UI change you have not looked at in a browser
+**Hard gate:** stages 12 and 13 are mandatory. *A UI change you have not looked at in a browser
 is not finished.* Blocker/High findings must be fixed before you report done.
 
 ---
@@ -201,6 +206,15 @@ Budgets (mobile, mid-tier device):
 - Fonts: preload primary, `font-display: swap`, subset aggressively.
 - Ship less JS. Server Components by default; `"use client"` only at real interaction leaves.
 - Dynamic-import heavy client libraries (GSAP, Three.js, charts).
+- Image weight budgets: hero ≤ 200KB, inline ≤ 120KB, thumbnail ≤ 40KB after compression.
+  Ship a `srcset` ladder with a `sizes` that matches the real layout — a 2560px file in a
+  400px slot is the most common failure on image-rich pages. See `image-sourcing`.
+- No autoplaying background video above ~2MB, and never as the LCP element. Poster frame
+  always; `preload="none"` below the fold; drop it entirely on save-data or reduced motion.
+- Minimise animation work: `transform`/`opacity` only, `will-change` sparingly and
+  temporarily. No permanent `requestAnimationFrame` — tie loops to IntersectionObserver and
+  `document.visibilityState`, and kill them on unmount. See `interaction-patterns`.
+- No Three.js/R3F for effects CSS or 2D canvas can carry (gradients, parallax, particles).
 - Verify with Lighthouse through the chrome-devtools MCP — measure, don't guess.
 
 ## 15. COMPONENT ARCHITECTURE
@@ -247,6 +261,10 @@ Budgets (mobile, mid-tier device):
 
 - Add components through the **shadcn MCP** (`search_items_in_registries`,
   `get_add_command_for_items`) — do not hand-roll dialogs, selects, or comboboxes.
+- The same MCP fronts **React Bits**, **Aceternity UI** and **21st.dev** via the `registries`
+  block in the project's `components.json` (template: `templates/components.json`). Prefer
+  one client over a redundant MCP server per vendor. Semantics from shadcn/Radix, visual
+  character from the others. Evaluate before installing — see `component-discovery`.
 - shadcn components are **owned source**, not a locked dependency: restyle them to the design
   system. Do not ship default shadcn styling as the final look — that is a primary source of
   generic-AI appearance.
@@ -323,7 +341,10 @@ These are **prohibitions**. Violating them makes work look machine-generated.
 - ❌ The three AI-slop palettes: cream + serif + terracotta; near-black + acid green/lime;
   hairline broadsheet minimalism.
 - ❌ Emoji as iconography in production UI.
-- ❌ Generic stock imagery and meaningless abstract 3D blobs.
+- ❌ Generic stock imagery and meaningless abstract 3D blobs — handshakes, headset smiles,
+  team huddles, glowing circuit boards. See `image-sourcing` for the full smell test.
+- ❌ Placeholder image services (`picsum.photos`, `placehold.co`) in a delivered build, and
+  invented image URLs anywhere. Every URL traces to a real API response or repo asset.
 - ❌ Filler copy ("Lorem ipsum", "Your tagline here", "Empower your workflow").
 
 **Required instead:**

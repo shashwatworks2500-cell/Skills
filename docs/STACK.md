@@ -46,6 +46,12 @@ instead of hand-rolling accessible primitives. Best for React/Next/Vue/Svelte pr
 
 - Docs: <https://ui.shadcn.com/docs/mcp> · Command: `npx shadcn@latest mcp`
 
+The same MCP also fronts **React Bits**, **Aceternity UI** and **21st.dev** — declare them in
+the consuming project's `components.json` `registries` block (template:
+`templates/components.json`) rather than adding a separate MCP server per vendor. The
+`component-discovery` skill carries the evaluation rubric and the preference order:
+existing code → shadcn → React Bits → Aceternity → 21st.dev.
+
 ## 👁️ Visual feedback — Playwright MCP + Chrome DevTools MCP
 
 The single biggest lever. Claude connects to a **real Chromium**, navigates, clicks, resizes,
