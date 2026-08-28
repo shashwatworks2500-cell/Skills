@@ -42,3 +42,7 @@ Thumbs.db
 *.log
 .idea/
 .vscode/
+
+# Python bytecode caches (regenerated whenever a skill script runs)
+__pycache__/
+*.py[cod]
